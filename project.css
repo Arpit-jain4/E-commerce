@@ -1,0 +1,21 @@
+#topheader
+{   width: 800px;
+   
+    font-size: 60px;
+    background-color: dodgerblue;
+    color: rgb(40,35,98);
+}
+#topheader a{
+    text-decoration: none;
+}
+.ex1
+{
+    background-color: blue;
+}
+#dialogue_box
+{   margin-top:5px;
+    padding:5px;
+    background-color: dodgerblue;
+    font-size:20px;
+    margin-right: 15px;
+}

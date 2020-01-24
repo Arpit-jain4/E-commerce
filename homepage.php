@@ -1,4 +1,3 @@
-<!Homepage of the user>
 <html>
 <head> 
 <link rel="stylesheet" href="project.css">
@@ -19,13 +18,12 @@
            <option>BOOK</option>
        </select><br>
        <?php
-       //To check whether the cookie is set or not. If cookie is set a user is already logged in.
        if(!isset($_COOKIE['user']))
-       { //If cookie is not set then login option will be provided
+       { 
            echo"<a href=login.php>Login</a><br>";
        }
        else
-       { //If cookie is set. A user is already logged in hence logout will be the option
+       {
        echo "<a href=logout.php>Logout</a><br>";
        }
        ?>
@@ -34,13 +32,11 @@
        <input type="submit" value="Search">
        </form>
        </aside>
-<?php
-//To show the user details
-if(isset($_COOKIE['user']))
-{
-echo "Welcome ".$_COOKIE['user']." to our shopping Mall<br>You can do purchasing by selecting items from the menu on left side";
-}
-?>
-
-
-
+              <main style="float: middle"> 
+           <h1><b>Welcome to our Shopping Mall</b></h1>
+      <h4><b> We provide a wide range of items ranging from luxury items to electronic items</b></h4>
+              </main>
+    </body>
+</html>
+    
+    

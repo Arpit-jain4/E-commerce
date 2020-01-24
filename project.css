@@ -8,6 +8,23 @@
 #topheader a{
     text-decoration: none;
 }
+#cart
+{
+    border-collapse:collapse;
+}
+#cart td,#cart th
+{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+#main_section
+{
+ float:right;
+ width:660px;
+ margin:30px;
+}
+#cart td
+{width: 15px;}
 .ex1
 {
     background-color: blue;

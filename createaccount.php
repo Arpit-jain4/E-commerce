@@ -1,5 +1,5 @@
 <html>
-    <header>
+    <head>
         <script>
              var check = function() 
              {
@@ -24,7 +24,7 @@
                 }
                var check2=function()
                {
-                   if(document.getElementById('phone').value.length<10)
+                   if(document.getElementById('phone').value.length!=10)
                    {
                        document.getElementById('message2').style.color='red';
                        document.getElementById('message2').innerHTML='Phone number invalid';
@@ -35,15 +35,13 @@
                    }
                }
         </script>
-        <html>
-<head> 
 <link rel="stylesheet" href="project.css">
 </head>
     <header id='topheader'>
-    E-SHOPPING
+        <a href='homepage.php'>E-SHOPPING</a>
+   
+    <a href="viewcart.php"><img src="image/download.png" style="height: 70px;width: 70px;margin-top:0px;float:right;"></a>
     </header>
-    <img src="image/download.png" style="height: 70px;width: 70px;margin-left: 1000px;margin-top:0px;">
-    
    <body>
        <aside style="float: left" id="dialogue_box">
        <form action="showitems.php" method="get">
@@ -54,25 +52,34 @@
            <option>MOBILE</option>
            <option>BOOK</option>
        </select><br>
-       <a href="login.php">Login</a><br>
+       <?php
+       //To check whether the cookie is set or not. If cookie is set a user is already logged in.
+       if(isset($_COOKIE['user']))
+       { //If cookie is set then login option will be provided
+           echo"<a href=login.php>Login</a><br>";
+       }
+       else
+       { //If cookie is set. A user is already logged in hence logout will be the option
+       echo "<a href=logout.php>Logout</a><br>";
+       }
+       ?>
        <a href="createaccount.php">Create Account</a><br>
-       <a href="contact.php">Contact Us</a><br>
+       <a href="contactus.php">Contact Us</a><br>
        <input type="submit" value="Search">
        </form>
        </aside>
-              <aside style="float: middle"> 
+       <main style="float: middle"> 
            <h1><b>Welcome to our Shopping Mall</b></h1>
       <h4><b> We provide a wide range of items ranging from luxury items to electronic items</b></h4>
-      
+      </main>
     </body>
 </html>
-
 <?php
-session_start();
+setcookie('user','10929',time()-86400);
 if(!empty($_POST))
 {
     $userid=$_POST['userid1'];
-    $pass=$_POST['pass1'];
+    $pass=$_POST['password'];
     $fname=$_POST['fname1'];
     $lname=$_POST['lname1'];
     $add11=$_POST['add1'];       
@@ -86,38 +93,40 @@ if(!empty($_POST))
     $user='root';
     $password='';
     $dbname='shopping';
+    $flag=0;
     $db=new mysqli('localhost',$user,$password,$dbname);
-    $sql= "SELECT emailid FROM customers WHERE category LIKE '$userid'";
+    /*while($flag==0)
+    {
+        $sql= "SELECT userid FROM customers WHERE category LIKE '$userid'";
     $result=$db->query($sql,MYSQLI_STORE_RESULT);
     if($result->num_rows>0)
     {
-        echo "User id already exist";
-        header("locatoin:homepage.php");      
+        echo "User id already exist";  
+        $flag=1;
     }
-    
-    
-       $sql= "INSERT INTO customers  VALUES ('$userid', '$pass', '$fname', '$lname', '$add11', '$add22', '$city', '$state','$country', '$zcode', '$email', '$phno')";
+    }*/
+       $sql= "INSERT INTO customers  VALUES ('$userid','$fname', '$lname', '$add11', '$add22', '$city', '$state','$zcode', '$email','$pass','$phno','$country')";
        $db->query($sql); 
        $cookiename=$userid;
                 $cookievalue=session_id();
-                setcookie($userid,$cookievalue,time()+86400,'/');
+                setcookie('user',$userid,time()+86400);
                 header("location:accounthome.php?name=$userid");
                 
 }
 else
     {
-?><aside style="float:middle">
+?><main style="float:middle">
 <form method="post">
-User id:<input type="text" name="userid1"><br>
-<label>Password 
-    <input name="password" id="password" type="password" onkeyup='check();' onblur='check1();' /><span id='message1'></span>
-</label>
-<br>
-<label>Confirm password
-  <input type="password" name="confirm_password" id="confirm_password"  onkeyup='check();' /> 
-  <span id='message'></span>
-</label><br>
-<table>
+    <table>
+<tr><td>User id:</td><td><input type="text" name="userid1"></td></tr>
+<tr><label><td>Password</td> 
+    <td><input name="password" id="password" type="password" onkeyup='check();' onblur='check1();' /><span id='message1'></span></td>
+</label></tr>
+<tr>
+<label><td>Confirm password</td>
+ <td> <input type="password" name="confirm_password" id="confirm_password"  onkeyup='check();' /> 
+  <span id='message'></span></td>
+</label></tr>
     <tr>
 <td>First name:</td><td><input type="text" name="fname1"></td>
     </tr>
@@ -136,9 +145,9 @@ User id:<input type="text" name="userid1"><br>
 <tr><td>Zip code:</td><td><input type="text" name="zipcode1"></td></tr>
 <tr><td>Email Id:</td><td><input type="text" name="emailid1"></td></tr>
 <tr><td><label>Phone no.:</td><td><input type="text" name="phnno1" id="phone" onkeyup="check2();" ></td><td><span id='message2'></span></td></tr>
-<td colspan='2'><tr><input type="submit" value="Submit"></td></tr>
+<tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
 </table>
-</aside>
+</main>
 <?php
 }
 ?>
